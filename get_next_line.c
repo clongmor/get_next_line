@@ -6,7 +6,7 @@
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 09:42:27 by clongmor          #+#    #+#             */
-/*   Updated: 2019/06/12 16:46:46 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/06/13 17:57:31 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,27 @@
 
 char		*readfile(int fd)
 {
+	char		*str[255];
 	char		*buff;
-	static ssize_t		read_no;
+	int			read_no;
+	char		*newline;
+	char		*tmp;
 
-	if (!(buff = ft_strnew(BUFF_SIZE)));
+	if (!(buff = ft_memset((void *)buff,'\0', (size_t)BUFF_SIZE + 1)))
 		return (NULL);
-	buff = ft_memset((void *)buff,'\0', (size_t)BUFF_SIZE - 1);
-	read_no = read(fd, (void *)buff, ((size_t)BUFF_SIZE - 1));
+	while (read_no = read(fd, (void *)buff, ((size_t)BUFF_SIZE)) > 0)
+	{
+		buff[BUFF_SIZE] = '\0';
+		if ((newline = ft_strchr(buff, '\n')) != NULL)
+			break ;
+		if (str[fd] == NULL)
+			str[fd] = ft_strnew(1);
+		tmp  = ft_strjoin(str[fd], buff);
+		free(str[fd]);
+		str[fd] = tmp;
+	}
 	if (read_no <= 0)
-		return (NULL);
-	return (buff);
+		return (-1);
 }
 
 /*void	readline(int fd, size_t linewidth)
