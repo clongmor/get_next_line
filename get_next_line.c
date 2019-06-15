@@ -6,13 +6,13 @@
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 09:42:27 by clongmor          #+#    #+#             */
-/*   Updated: 2019/06/14 10:28:31 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/06/15 14:23:24 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		store_line(int fd, char *str, char**line)
+int		store_line(char *str, char**line)
 {
 	int		len;
 	int		i;
@@ -29,9 +29,10 @@ int		store_line(int fd, char *str, char**line)
 			*line[i] = str[i];
 			i++;
 		}
-		tmp = strdup(str[len + 1]);
+		tmp = strdup(str + (len +1));
 		free(str);
 		str = tmp;
+		return (1);
 	}
 	else if (str[len] == '\0')
 	{
@@ -40,7 +41,10 @@ int		store_line(int fd, char *str, char**line)
 			*line[i] = str[i];
 			i++;
 		}
+		return (0);
 	}
+	else
+		return (-1);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -48,10 +52,8 @@ int		get_next_line(const int fd, char **line)
 	static char		*str[255];
 	char			*buff;
 	int				read_no;
-	char			*newline;
 	char			*tmp;
 	int				i;
-	int				bytes_read;
 
 	i = 0;
 	if (!(buff = ft_strnew((size_t)BUFF_SIZE + 1)))
@@ -59,22 +61,19 @@ int		get_next_line(const int fd, char **line)
 	while ((read_no = read(fd, (void *)buff, BUFF_SIZE)) > 0)
 	{
 		buff[BUFF_SIZE] = '\0';
-		if (str[fd] == NULL)
-			str[fd] = ft_strnew(1);
-		tmp  = ft_strjoin(str[fd], buff);
+		if (str[0] == NULL)
+			str[0] = ft_strnew(1);
+		tmp  = ft_strjoin(str[0], buff);
 		free(str[fd]);
 		str[fd] = tmp;
 		free(tmp);
-		if (ft_strchr(buff, '\n') != NULL)
+		if (ft_strchr(buff, '\n') != NULL || (read_no < BUFF_SIZE && read_no >= 0))
 			break ;
 	}
 	if (read_no < 0)
-		rteurn (-1);
-	else if (read_no == 0)
-		return (0);
-	else if (read_no > 0)
-		return (store_line());
-	
+		return (-1);
+	else (read_no >= 0)
+		return (store_line(str, line));
 }
 
 /*void	readline(int fd, size_t linewidth)
