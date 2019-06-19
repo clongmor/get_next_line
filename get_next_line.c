@@ -6,7 +6,7 @@
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 09:42:27 by clongmor          #+#    #+#             */
-/*   Updated: 2019/06/19 09:38:29 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/06/19 10:26:20 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int		store_line(char **str, char **line, const int fd, int read_no)
 		if (str[fd][0] == '\0')
 			ft_strdel(&str[fd]);
 	}
-	else if (str[len] == '\0')
+	else if (str[fd][len] == '\0')
 	{
 		if (read_no == BUFF_SIZE)
 			return (get_next_line(fd, line));
-		*line = ft_strdup(str[fd] + (len + 1));
+		*line = ft_strsub(str[fd], 0, ft_strlen(str[fd]));
 		ft_strdel(&str[fd]);
 	}
 	return (1);
@@ -55,7 +55,7 @@ int		get_next_line(const int fd, char **line)
 	int				read_no;
 	char			*tmp;
 
-	if (fd < 1 || line == NULL || !(buff = ft_strnew((size_t)BUFF_SIZE + 1)))
+	if (fd < 0 || line == NULL || !(buff = ft_strnew((size_t)BUFF_SIZE)))
 		return (-1);
 	while ((read_no = read(fd, (void *)buff, BUFF_SIZE)) > 0)
 	{
