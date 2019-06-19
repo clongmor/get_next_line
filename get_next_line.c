@@ -6,39 +6,46 @@
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 09:42:27 by clongmor          #+#    #+#             */
-/*   Updated: 2019/06/18 12:49:29 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/06/19 09:38:29 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** a function to read in input from a file descriptor until
+** it finds a \n or end of file which is stipulated by \0
+** we add. it then stores the line until -not including
+** - the newline in the supplied pointer variable. it
+** returns -1, 0, or 1, based on whether it found an error,
+** finished reading or found a newline and stored it
+*/
+
 #include "get_next_line.h"
 
-int		store_line(char *str, char **line)
+int		store_line(char **str, char **line, const int fd, int read_no)
 {
 	int		len;
-	int		i;
 	char	*tmp;
 
-	i = 0;
 	len = 0;
-	while (str[len] != '\n' && str[len] != '\0')
+	while (str[fd][len] != '\n' && str[fd][len] != '\0')
 		len++;
-	if (str[len] == '\n')
+	if (str[fd][len] == '\n')
 	{
-		while (len-- > 0)
-			*line++ = str++;
-		tmp = ft_strdup(str + (len +1));
-		free(str);
-		str = tmp;
-		return (1);
+		*line = ft_strsub(str[fd], 0, len);
+		tmp = ft_strdup(str[fd] + (len + 1));
+		free(str[fd]);
+		str[fd] = tmp;
+		if (str[fd][0] == '\0')
+			ft_strdel(&str[fd]);
 	}
 	else if (str[len] == '\0')
 	{
-		while (len-- > 0)
-			*line++ = str++;
-		return (0);
+		if (read_no == BUFF_SIZE)
+			return (get_next_line(fd, line));
+		*line = ft_strdup(str[fd] + (len + 1));
+		ft_strdel(&str[fd]);
 	}
-	else
-		return (-1);
+	return (1);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -48,39 +55,23 @@ int		get_next_line(const int fd, char **line)
 	int				read_no;
 	char			*tmp;
 
-	if (fd < 1 || line == NULL)
-		return (-1);
-	if (!(buff = ft_strnew((size_t)BUFF_SIZE + 1)))
+	if (fd < 1 || line == NULL || !(buff = ft_strnew((size_t)BUFF_SIZE + 1)))
 		return (-1);
 	while ((read_no = read(fd, (void *)buff, BUFF_SIZE)) > 0)
 	{
 		buff[BUFF_SIZE] = '\0';
 		if (str[fd] == NULL)
 			str[fd] = ft_strnew(0);
-		tmp  = ft_strjoin(str[fd], buff);
+		tmp = ft_strjoin(str[fd], buff);
 		free(str[fd]);
 		str[fd] = tmp;
-		free(tmp);
-		if (ft_strchr(buff, '\n') != NULL || (read_no < BUFF_SIZE && read_no >= 0))
+		if (ft_strchr(buff, '\n'))
 			break ;
 	}
-	if (read_no >= 0 && str[fd] != NULL)
-		return (store_line(str[fd], line));
-	else
+	if (read_no < 0)
 		return (-1);
+	else if (read_no == 0 && (str[fd] == NULL || str[fd][0] == '\0'))
+		return (0);
+	else
+		return (store_line(str, line, fd, read_no));
 }
-
-/*void	readline(int fd, size_t linewidth)
-{
-	size_t		i;
-	char		*buff;
-
-	i = 0;
-	if (!(buff = readfile(fd)))
-		return ;
-	while (buff[i])
-	{
-		if (buff[i] == '\n')
-			ft_printline(i);
-	}
-}*/
