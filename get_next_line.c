@@ -6,7 +6,7 @@
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 09:42:27 by clongmor          #+#    #+#             */
-/*   Updated: 2019/06/19 10:26:20 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/07/01 11:02:24 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ int		store_line(char **str, char **line, const int fd, int read_no)
 int		get_next_line(const int fd, char **line)
 {
 	static char		*str[255];
-	char			*buff;
+	char			buff[BUFF_SIZE + 1];
 	int				read_no;
 	char			*tmp;
 
-	if (fd < 0 || line == NULL || !(buff = ft_strnew((size_t)BUFF_SIZE)))
+	if (fd < 0 || line == NULL)
 		return (-1);
 	while ((read_no = read(fd, (void *)buff, BUFF_SIZE)) > 0)
 	{
-		buff[BUFF_SIZE] = '\0';
+		buff[read_no] = '\0';
 		if (str[fd] == NULL)
 			str[fd] = ft_strnew(0);
 		tmp = ft_strjoin(str[fd], buff);
