@@ -6,7 +6,7 @@
 #    By: clongmor <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/23 09:23:50 by clongmor          #+#    #+#              #
-#    Updated: 2019/06/12 11:22:23 by clongmor         ###   ########.fr        #
+#    Updated: 2019/07/03 09:52:33 by clongmor         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS = ft_memchr.c ft_memcpy.c ft_memset.c ft_putstr.c ft_strlen.c ft_bzero.c \
 	   ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 	   ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 	   ft_lstmap.c ft_strndup.c ft_isspace.c ft_strlcpy.c ft_strlowcase.c \
-	   ft_intlength.c ft_strcasestr.c
+	   ft_intlength.c ft_strcasestr.c ft_lstlen.c ft_lstaddtail.c \
+
 
 OSRCS = ft_memchr.o ft_memcpy.o ft_memset.o ft_putstr.o ft_strlen.o \
 		ft_bzero.o ft_memccpy.o ft_memcmp.o ft_memmove.o ft_putchar.o \
@@ -40,7 +41,8 @@ OSRCS = ft_memchr.o ft_memcpy.o ft_memset.o ft_putstr.o ft_strlen.o \
 		ft_putnbr.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o \
 		ft_putnbr_fd.o ft_lstnew.o ft_lstdelone.o ft_lstdel.o ft_lstadd.o \
 		ft_lstiter.o ft_lstmap.o ft_strndup.o ft_isspace.o ft_strlcpy.o \
-		ft_strlowcase.o ft_intlength.o ft_strcasestr.o  
+		ft_strlowcase.o ft_intlength.o ft_strcasestr.o ft_lstlen.o \
+		ft_lstaddtail.o
 
 FLAGS = -Wall -Wextra -Werror
 

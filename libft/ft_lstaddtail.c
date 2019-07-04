@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstaddtail.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 16:29:24 by clongmor          #+#    #+#             */
-/*   Updated: 2019/07/04 10:59:40 by clongmor         ###   ########.fr       */
+/*   Created: 2019/07/03 09:42:58 by clongmor          #+#    #+#             */
+/*   Updated: 2019/07/03 10:38:12 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** takes in a size, allocates a memory of that size,
-** plus 1 for the \0. then sets each byte to \0.
-** returns the memory block allocated.
-** Uses: ft_memalloc.
-*/
-
 #include "libft.h"
 
-char	*ft_strnew(size_t size)
+void	ft_lstaddtail(t_list **lst, t_list *elem)
 {
-	char			*mem_area;
-	size_t			i;
+	t_list	*tmp;
 
-	if (!(mem_area = (char *)malloc(size + 1)))
-		return (NULL);
-	i = 0;
-	while (i < size + 1)
+	tmp = *lst;
+	if (!(elem) || !(*lst))
+		return ;
+	while ((*lst)->next)
 	{
-		mem_area[i] = '\0';
-		i++;
+		*lst = (*lst)->next;
 	}
-	return (mem_area);
+	(*lst)->next = elem;
+	*lst = tmp;
 }

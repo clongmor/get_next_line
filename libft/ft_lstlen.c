@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 16:29:24 by clongmor          #+#    #+#             */
-/*   Updated: 2019/07/04 10:59:40 by clongmor         ###   ########.fr       */
+/*   Created: 2019/07/02 16:47:39 by clongmor          #+#    #+#             */
+/*   Updated: 2019/07/02 16:54:52 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** takes in a size, allocates a memory of that size,
-** plus 1 for the \0. then sets each byte to \0.
-** returns the memory block allocated.
-** Uses: ft_memalloc.
-*/
-
 #include "libft.h"
 
-char	*ft_strnew(size_t size)
+size_t	ft_lstlen(t_list *lst)
 {
-	char			*mem_area;
-	size_t			i;
+	int	i;
 
-	if (!(mem_area = (char *)malloc(size + 1)))
-		return (NULL);
 	i = 0;
-	while (i < size + 1)
+	if (!lst)
+		return (i);
+	while (!(lst == NULL))
 	{
-		mem_area[i] = '\0';
 		i++;
+		lst = lst->next;
 	}
-	return (mem_area);
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 12:15:35 by event             #+#    #+#             */
-/*   Updated: 2019/06/24 09:19:28 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/07/03 09:53:17 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,7 @@ char				*ft_strndup(const char *s1, size_t n);
 int					ft_isupper(int c);
 int					ft_islower(int c);
 char				*ft_strrev(char *s);
+
+size_t				ft_lstlen(t_list *lst);
+void				ft_lstaddtail(t_list **lst, t_list *elem);
 #endif

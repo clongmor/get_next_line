@@ -6,7 +6,7 @@
 /*   By: clongmor <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 16:53:39 by clongmor          #+#    #+#             */
-/*   Updated: 2019/06/19 16:53:42 by clongmor         ###   ########.fr       */
+/*   Updated: 2019/07/04 10:22:15 by clongmor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 
 void	ft_strdel(char **as)
 {
-	void	**ptr;
-
 	if (as == NULL)
 		return ;
-	ptr = (void **)as;
-	ft_memdel(ptr);
+	free(*as);
+	*as = NULL;
 }
